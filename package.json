@@ -1,0 +1,19 @@
+{
+  "name": "matchable-checkout-system",
+  "version": "1.0.0",
+  "description": "Comprehensive e-commerce checkout system with Angular frontend and PHP backend",
+  "scripts": {
+    "dev:frontend": "cd frontend && ng serve",
+    "dev:backend": "cd backend && php -S localhost:8080 -t public",
+    "build:frontend": "cd frontend && ng build --prod",
+    "test:frontend": "cd frontend && ng test",
+    "test:backend": "cd backend && vendor/bin/phpunit",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && composer install"
+  },
+  "keywords": ["ecommerce", "checkout", "angular", "php", "mysql"],
+  "author": "Checkout System Team",
+  "license": "MIT"
+}

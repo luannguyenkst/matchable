@@ -1,0 +1,55 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+backend/cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+backend/logs/
+
+# Database
+*.sqlite
+*.db
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Cache
+backend/cache/*
+!backend/cache/.gitkeep
+
+# Composer
+backend/composer.phar
+
+# Angular
+frontend/.angular/
+frontend/coverage/
+
+# Testing
+phpunit.xml
+.phpunit.result.cache
+
+# Docker
+docker-data/
