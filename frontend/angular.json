@@ -71,8 +71,7 @@
               "buildTarget": "matchable-frontend:build:production"
             },
             "development": {
-              "buildTarget": "matchable-frontend:build:development",
-              "proxyConfig": "proxy.conf.json"
+              "buildTarget": "matchable-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

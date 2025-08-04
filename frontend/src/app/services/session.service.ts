@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -28,12 +28,12 @@ export class SessionService {
    * Get available sessions with optional filters
    */
   getSessions(filters?: SessionFilters): Observable<{ sessions: Session[], total: number }> {
-    let params = new HttpParams();
+    const params: any = {};
     
-    if (filters?.date) params = params.set('date', filters.date);
-    if (filters?.type) params = params.set('type', filters.type);
-    if (filters?.trainer_id) params = params.set('trainer_id', filters.trainer_id.toString());
-    if (filters?.duration) params = params.set('duration', filters.duration.toString());
+    if (filters?.date) params.date = filters.date;
+    if (filters?.type) params.type = filters.type;
+    if (filters?.trainer_id) params.trainer_id = filters.trainer_id.toString();
+    if (filters?.duration) params.duration = filters.duration.toString();
 
     return this.apiService.get<{ sessions: Session[], total: number }>('/sessions', params).pipe(
       map(response => {
@@ -61,8 +61,8 @@ export class SessionService {
    * Get available trainers
    */
   getTrainers(specialization?: string): Observable<{ trainers: Trainer[] }> {
-    let params = new HttpParams();
-    if (specialization) params = params.set('specialization', specialization);
+    const params: any = {};
+    if (specialization) params.specialization = specialization;
 
     return this.apiService.get<{ trainers: Trainer[] }>('/sessions/trainers', params).pipe(
       map(response => {

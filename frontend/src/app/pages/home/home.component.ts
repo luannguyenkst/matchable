@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from '@/environments/environment';
+import { SessionService } from '../../services/session.service';
+import { SessionFilters } from '../../models/session.model';
 
 interface SessionType {
   id: number;
@@ -448,7 +450,7 @@ export class HomeComponent implements OnInit {
     special_requests: ''
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private sessionService: SessionService) {}
 
   ngOnInit() {
     this.loadSessionTypes();
@@ -476,17 +478,25 @@ export class HomeComponent implements OnInit {
   loadSessions() {
     if (!this.selectedType) return;
 
-    const params = new URLSearchParams({
+    const filters: SessionFilters = {
       type: this.selectedType.name
-    });
+    };
 
-    this.http.get<any>(`${environment.apiUrl}/sessions?${params}`).subscribe({
+    // Add date filter if selected
+    if (this.selectedDate) {
+      filters.date = this.selectedDate;
+    }
+
+    // Add duration filter if selected
+    if (this.selectedDuration) {
+      filters.duration = Number(this.selectedDuration);
+    }
+
+    this.sessionService.getSessions(filters).subscribe({
       next: (response) => {
-        if (response.success) {
-          this.sessions = response.data.sessions;
-          this.extractAvailableDates();
-          this.filterSessions();
-        }
+        this.sessions = response.sessions;
+        this.filteredSessions = response.sessions; // Server-side filtered, no need for client-side filtering
+        this.extractAvailableDates();
       },
       error: (error) => {
         this.showMessage('Error loading sessions', 'error');
@@ -500,11 +510,8 @@ export class HomeComponent implements OnInit {
   }
 
   filterSessions() {
-    this.filteredSessions = this.sessions.filter(session => {
-      const dateMatch = !this.selectedDate || session.date === this.selectedDate;
-      const durationMatch = !this.selectedDuration || session.duration_minutes === Number(this.selectedDuration);
-      return dateMatch && durationMatch;
-    });
+    // Now that we use server-side filtering, just reload sessions with current filters
+    this.loadSessions();
   }
 
   toggleSession(sessionId: number) {
