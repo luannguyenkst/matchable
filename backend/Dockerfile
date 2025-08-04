@@ -24,6 +24,9 @@ WORKDIR /var/www/html
 # Copy existing application directory contents
 COPY . /var/www/html
 
+# Ensure .env file exists
+COPY .env.dev /var/www/html/.env
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
